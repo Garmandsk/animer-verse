@@ -1,5 +1,7 @@
-import 'package:animer_verse/screens/signin_screen.dart';
+import 'package:animer_verse/config/routes.dart';
+import 'package:animer_verse/providers/app_state_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // <-- ini penting
 
 void main() {
   runApp(const MyApp());
@@ -8,14 +10,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AnimeVerse',
-      theme: ThemeData(fontFamily: 'Urbanist'),
-      home: const SignInScreen(),
-      debugShowCheckedModeBanner: false,
+    return ChangeNotifierProvider(
+      create: (_) => AppStateProvider(),
+      child: MaterialApp.router(
+        title: 'AnimeVerse',
+        theme: ThemeData(fontFamily: 'Urbanist'),
+        routerConfig: createRouter(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
