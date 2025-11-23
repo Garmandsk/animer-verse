@@ -43,3 +43,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase related
+# Note: firebase_options.dart is SAFE to commit (public API keys)
+# Note: firebase.json is SAFE to commit (deployment config)
+**/google-services.json
+**/GoogleService-Info.plist
+.firebase/
+.firebaserc
