@@ -1,32 +1,70 @@
-import 'package:anime_verse/widgets/app_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:anime_verse/providers/app_state_provider.dart';
+import 'package:anime_verse/data/dummy_data.dart';
+import 'package:anime_verse/models/anime.dart';
+import 'package:anime_verse/widgets/app_scaffold.dart';
 
 class DetailScreen extends StatelessWidget {
   final String animeId;
-  final String title;
-  final String imagePath;
-  final String genre;
-  final String rating;
-  final String totalEpisodes;
-  final String description;
 
   const DetailScreen({
     super.key,
-    // Menggunakan data dummy untuk sementara sebagai demo
-    this.animeId = '1',
-    this.title = 'Black Clover',
-    this.imagePath = 'assets/images/black_clover.jpg',
-    this.genre = 'Action, Adventure, Fantasy',
-    this.rating = '8.14',
-    this.totalEpisodes = '170',
-    this.description =
-    "Asta and Yuno were abandoned at the same church on the same day. Raised together as children, they came to know of the 'Wizard King'—a title given to the strongest mage in the kingdom—and promised that they would compete against each other for the position of the next Wizard King. However, as they grew up, the stark difference between them became evident. While Yuno is able to wield magic with amazing power and control, Asta cannot use magic at all and desperately tries to awaken his powers by training physically. When they reach the age of 15, Yuno is bestowed a spectacular Grimoire with a four-leaf clover, while Asta receives nothing. However, soon after, Yuno is attacked by a person named Lebuty, whose main purpose is to obtain Yuno's Grimoire. Asta tries to fight Lebuty, but he is outmatched. Though without hope and on the brink of defeat, he finds the strength to continue when he hears Yuno's voice. Unleashing his inner emotions in a rage, Asta receives a five-leaf clover Grimoire, a 'Black Clover' giving him enough power to defeat Lebuty. A few days later, the two friends head out into the world, both seeking the same goal—to become the Wizard King! [Written by MAL Rewrite]",
+    required this.animeId,
   });
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
+    final Anime? anime = DummyData.animeList.cast<Anime?>().firstWhere(
+      (anime) => anime?.id == animeId,
+      orElse: () => null,
+    );
+
+    // Handle case when anime is not found
+    if (anime == null) {
+      return AppScaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.error_outline,
+                size: screenWidth * 0.2,
+                color: Colors.red,
+              ),
+              SizedBox(height: screenHeight * 0.02),
+              Text(
+                'Anime not found',
+                style: TextStyle(
+                  fontSize: screenWidth * 0.05,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.01),
+              Text(
+                'ID: $animeId',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: screenWidth * 0.04,
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.03),
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF0b395e),
+                ),
+                child: const Text('Go Back'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
 
     return AppScaffold(
       body: CustomScrollView(
@@ -64,7 +102,7 @@ class DetailScreen extends StatelessWidget {
                 children: [
                   // Background image
                   Image.asset(
-                    imagePath,
+                    anime.imagePath,
                     fit: BoxFit.cover,
                   ),
                   // Gradient overlay for better text visibility
@@ -87,39 +125,78 @@ class DetailScreen extends StatelessWidget {
                     bottom: screenHeight * 0.02,
                     left: screenWidth * 0.04,
                     right: screenWidth * 0.04,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: screenWidth * 0.07,
-                            fontWeight: FontWeight.w900,
-                            shadows: [
-                              Shadow(
-                                offset: const Offset(0, 2),
-                                blurRadius: 4,
-                                color: Colors.black.withValues(alpha: 0.7),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              anime.title,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: screenWidth * 0.07,
+                                fontWeight: FontWeight.w900,
+                                shadows: [
+                                  Shadow(
+                                    offset: const Offset(0, 2),
+                                    blurRadius: 4,
+                                    color: Colors.black.withValues(alpha: 0.7),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            SizedBox(height: screenHeight * 0.005),
+                            Text(
+                              anime.genre,
+                              style: TextStyle(
+                                color: Colors.white.withValues(alpha: 0.9),
+                                fontSize: screenWidth * 0.04,
+                                fontWeight: FontWeight.w500,
+                                shadows: [
+                                  Shadow(
+                                    offset: const Offset(0, 1),
+                                    blurRadius: 2,
+                                    color: Colors.black.withValues(alpha: 0.7),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: screenHeight * 0.005),
-                        Text(
-                          genre,
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.9),
-                            fontSize: screenWidth * 0.04,
-                            fontWeight: FontWeight.w500,
-                            shadows: [
-                              Shadow(
-                                offset: const Offset(0, 1),
-                                blurRadius: 2,
-                                color: Colors.black.withValues(alpha: 0.7),
+                        // Favorite Button
+                        Consumer<AppStateProvider>(
+                          builder: (context, favoriteProvider, child) {
+                            final isFavorite = favoriteProvider.isFavorite(anime.id);
+                            
+                            return Container(
+                              margin: EdgeInsets.only(left: screenWidth * 0.03),
+                              decoration: BoxDecoration(
+                                color: isFavorite 
+                                  ? Colors.red.withValues(alpha: 0.9)
+                                  : Colors.black.withValues(alpha: 0.5),
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.5),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                              child: IconButton(
+                                icon: Icon(
+                                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                                  color: Colors.white,
+                                  size: screenWidth * 0.07,
+                                ),
+                                onPressed: () {
+                                  favoriteProvider.toggleFavorite(anime);
+                                },
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -165,7 +242,7 @@ class DetailScreen extends StatelessWidget {
                             ),
                             SizedBox(width: screenWidth * 0.01),
                             Text(
-                              rating,
+                              anime.rating,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: screenWidth * 0.035,
@@ -194,7 +271,7 @@ class DetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(screenWidth * 0.02),
                         ),
                         child: Text(
-                          '$totalEpisodes Episodes',
+                          '${anime.totalEpisodes} Episodes',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: screenWidth * 0.035,
@@ -258,7 +335,7 @@ class DetailScreen extends StatelessWidget {
                   SizedBox(height: screenHeight * 0.015),
 
                   Text(
-                    description,
+                    anime.description,
                     style: TextStyle(
                       color: Colors.white.withValues(alpha:0.9),
                       fontSize: screenWidth * 0.038,

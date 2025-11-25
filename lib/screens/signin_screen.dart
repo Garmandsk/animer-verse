@@ -5,9 +5,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/app_scaffold.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -245,30 +250,32 @@ class SignInScreen extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.04),
 
                     // Sign up link
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account? ",
-                          style: TextStyle(
-                            fontSize: screenWidth * 0.04,
-                            color: Colors.white70,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            // TODO: Navigate to sign up screen
-                          },
-                          child: Text(
-                            'Sign Up',
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don't have an account? ",
                             style: TextStyle(
                               fontSize: screenWidth * 0.04,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blue.shade300,
+                              color: Colors.white70,
                             ),
                           ),
-                        )
-                      ],
+                          TextButton(
+                            onPressed: () {
+                              // TODO: Navigate to sign up screen
+                            },
+                            child: Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                fontSize: screenWidth * 0.04,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.blue.shade300,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
 
                     SizedBox(height: screenHeight * 0.05),

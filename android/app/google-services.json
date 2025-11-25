@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "101643469100",
+    "project_id": "anime-verse-project",
+    "storage_bucket": "anime-verse-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101643469100:android:7ce34de6eca0ec1a61ec89",
+        "android_client_info": {
+          "package_name": "com.example.anime_verse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAD0YdXgclZjT9LqG0KNxTgZ2vKlxVLhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
