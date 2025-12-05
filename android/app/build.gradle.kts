@@ -24,7 +24,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "com.example.anime_verse"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "29.0.13113456"
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
