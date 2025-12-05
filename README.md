@@ -35,9 +35,8 @@
                               <td><img src="./ss/profileScreen.jpg" width="250"/><br/><b>Profile</b></td>
                                 </tr>
                                 </table>
+---
 
-                                ---
-
-                                ## 📱 Demo
-                                link
+## 📱 Demo
+link
                                 
