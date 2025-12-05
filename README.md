@@ -25,14 +25,14 @@
 
 <table>
   <tr>
-      <td><img src="./ss/signInScreen.jpg" width="250"/><br/><b>Sign In</b></td>
-          <td><img src="./ss/signUpScreen.jpg" width="250"/><br/><b>Sign Up</b></td>
-              <td><img src="./ss/homeScreen.jpg" width="250"/><br/><b>Home</b></td>
+      <td><img src="./assets/ss/signInScreen.jpg" width="250"/><br/><b>Sign In</b></td>
+          <td><img src="./assets/ss/signUpScreen.jpg" width="250"/><br/><b>Sign Up</b></td>
+              <td><img src="./assets/ss/homeScreen.jpg" width="250"/><br/><b>Home</b></td>
                 </tr>
                   <tr>
-                      <td><img src="./ss/detailScreen.jpg" width="250"/><br/><b>Anime Detail</b></td>
-                          <td><img src="./ss/favoriteScreen.jpg" width="250"/><br/><b>Favorites</b></td>
-                              <td><img src="./ss/profileScreen.jpg" width="250"/><br/><b>Profile</b></td>
+                      <td><img src="./assets/ss/detailScreen.jpg" width="250"/><br/><b>Anime Detail</b></td>
+                          <td><img src="./assets/ss/favoriteScreen.jpg" width="250"/><br/><b>Favorites</b></td>
+                              <td><img src="./assets/ss/profileScreen.jpg" width="250"/><br/><b>Profile</b></td>
                                 </tr>
                                 </table>
 ---
